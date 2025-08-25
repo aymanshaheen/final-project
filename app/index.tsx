@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 
-/**
- * Root application component. Keep this minimal; real features live under `app/` folders.
- */
 export default function App() {
-  return <View style={styles.container} />;
+  return <View style={styles.container} >
+    <Text>Hello World</Text>
+  </View>;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#ffffff',
   },
 });
