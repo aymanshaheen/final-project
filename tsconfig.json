@@ -1,5 +1,20 @@
 {
   "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@models/*": ["app/models/*"],
+      "@services/*": ["app/services/*"],
+      "@components/*": ["app/components/*"],
+      "@hooks/*": ["app/hooks/*"],
+      "@styles": ["app/styles"],
+      "@styles/*": ["app/styles/*"],
+      "@types/*": ["app/types/*"],
+      "@utils/*": ["app/utils/*"]
+    }
+  },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["**/node_modules", "**/Pods"]
 }
