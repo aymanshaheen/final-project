@@ -40,17 +40,18 @@ export function useCurrentLocation() {
       );
       return nextRegion;
     } catch (error: any) {
-      console.warn('[Location] requestPosition: error', error?.code, error);
-      if (error?.code === 1) {
+      const code = (error as any)?.code;
+      if (code === 1) {
         setPermissionDenied(true);
-        console.warn('[Location] permission denied by user/system');
+        console.log('[Location] permission denied by user/system');
+      } else {
+        console.log('[Location] requestPosition: error', code, error);
       }
       const fallbackRegion: Region = {
         latitude: DEFAULT_CITY.latitude,
         longitude: DEFAULT_CITY.longitude,
         ...DEFAULT_CITY_DELTA,
       };
-      // Ensure we have sensible defaults for both region and current coordinates
       setCurrentCoords({
         latitude: DEFAULT_CITY.latitude,
         longitude: DEFAULT_CITY.longitude,

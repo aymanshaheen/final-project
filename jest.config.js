@@ -1,11 +1,8 @@
 module.exports = {
   preset: 'react-native',
-  setupFilesAfterEnv: [
-    '@testing-library/jest-native/extend-expect',
-    'react-native-gesture-handler/jestSetup',
-  ],
+  setupFilesAfterEnv: ['react-native-gesture-handler/jestSetup'],
   transformIgnorePatterns: [
-    'node_modules/(?!(@react-native|react-native|@react-navigation|react-native-gesture-handler|react-native-screens|react-native-safe-area-context)/)',
+    'node_modules/(?!(@react-native|react-native|@react-navigation|react-native-gesture-handler|react-native-screens|react-native-safe-area-context|react-native-permissions)/)',
   ],
   moduleNameMapper: {
     '^@models/(.*)$': '<rootDir>/app/models/$1',
@@ -16,5 +13,10 @@ module.exports = {
     '^@styles/(.*)$': '<rootDir>/app/styles/$1',
     '^@types/(.*)$': '<rootDir>/app/types/$1',
     '^@utils/(.*)$': '<rootDir>/app/utils/$1',
+    '^react-native-permissions$':
+      '<rootDir>/__mocks__/react-native-permissions.ts',
+    '^react-native-maps$': '<rootDir>/__mocks__/react-native-maps.tsx',
+    '^react-native-geolocation-service$':
+      '<rootDir>/__mocks__/react-native-geolocation-service.ts',
   },
 };

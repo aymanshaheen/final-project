@@ -18,7 +18,7 @@ import { useNearbyPlaces } from '@hooks/useNearbyPlaces';
 import { PlacesMarkers } from '@components/PlacesMarkers';
 import { PlacesList } from '@components/PlacesList';
 import { FilterBar } from '@components/FilterBar';
-import { EmptyState, ErrorState } from '@components/ScreenStates';
+import { ErrorState } from '@components/ScreenStates';
 import { CurrentLocationMarker } from '@components/CurrentLocationMarker';
 import { useDebounced } from '@hooks/useDebounced';
 import { useMapZoom } from '@hooks/useMapZoom';
@@ -74,7 +74,6 @@ export default function MapScreen(): React.ReactElement {
     }
   }, [requestPosition, region]);
 
-
   const provider: MapViewProps['provider'] | undefined =
     Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined;
 
@@ -126,7 +125,7 @@ export default function MapScreen(): React.ReactElement {
         scrollEnabled
         rotateEnabled
         pitchEnabled
-        initialRegion={region ?? undefined}
+        region={region ?? undefined}
         onRegionChangeComplete={setRegion}
       >
         <CurrentLocationMarker coords={currentCoords} />
@@ -178,25 +177,23 @@ export default function MapScreen(): React.ReactElement {
         ) : null}
       </View>
 
-      {hookLoading || sortedByDistance.length > 0 ? (
-        <PlacesList
-          items={sortedByDistance}
-          selectedId={selectedPlaceId}
-          onPressItem={item => {
-            setSelectedPlaceId(item.id);
-            focusPlace(item as NearbyPlace, {
-              zoomFactor: 0.8,
-              durationMs: 350,
-            });
-            navigation.navigate('PlaceDetails', { id: String(item.id) });
-          }}
-          onProvideListRef={ref => {
-            // @ts-ignore
-            listRef.current = ref;
-          }}
-          isLoading={hookLoading}
-        />
-      ) : null}
+      <PlacesList
+        items={sortedByDistance}
+        selectedId={selectedPlaceId}
+        onPressItem={item => {
+          setSelectedPlaceId(item.id);
+          focusPlace(item as NearbyPlace, {
+            zoomFactor: 0.8,
+            durationMs: 350,
+          });
+          navigation.navigate('PlaceDetails', { id: String(item.id) });
+        }}
+        onProvideListRef={ref => {
+          // @ts-ignore
+          listRef.current = ref;
+        }}
+        isLoading={hookLoading}
+      />
 
       {!hookLoading && hookError ? (
         <View style={styles.loadingOverlay}>
@@ -204,14 +201,7 @@ export default function MapScreen(): React.ReactElement {
         </View>
       ) : null}
 
-      {!hookLoading && !hookError && sortedByDistance.length === 0 ? (
-        <View style={styles.loadingOverlay} pointerEvents="none">
-          <EmptyState
-            title="No places found"
-            subtitle="Try another type or radius."
-          />
-        </View>
-      ) : null}
+      {/* Empty state handled inside PlacesList */}
     </View>
   );
 }

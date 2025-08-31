@@ -1,4 +1,3 @@
-
 import React, { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import {
   FlatList,
@@ -71,7 +70,18 @@ export function PlacesList({
     );
   }
 
-  if (!items || items.length === 0) return null;
+  if (!items || items.length === 0) {
+    return (
+      <View style={styles.bottomListContainer} pointerEvents="box-none">
+        <View style={[styles.list, styles.emptyContainer]}>
+          <Text style={styles.emptyTitle}>No places found</Text>
+          <Text style={styles.emptySubtitle}>
+            Try another type or increase the radius.
+          </Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.bottomListContainer} pointerEvents="box-none">
@@ -220,6 +230,19 @@ const styles = StyleSheet.create({
   },
   list: {
     maxHeight: 260,
+  },
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: spacing.md,
+  },
+  emptyTitle: {
+    color: colors.textPrimary,
+    fontWeight: '600',
+    marginBottom: spacing.xs,
+  },
+  emptySubtitle: {
+    color: colors.textSecondary,
   },
   listContent: {
     gap: spacing.sm,
